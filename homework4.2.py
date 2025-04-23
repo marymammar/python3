@@ -1,12 +1,13 @@
 
+
 import re
 
 file= '../access_log.txt'
 filename = open(file)
 bytes_dict = {}
 for line in filename:
-    matchid = re.search(r'~([a-zA-z][a-zA-z][a-zA-Z]?\d+)',line)
-    matchbytes = re.search(r'(\d+)',line)
+    matchid = re.search(r'~([a-zA-z]+\d+)',line)
+    matchbytes = re.search(r'(\d+)$',line)
 
     if not matchid or not matchbytes:
         continue
@@ -20,6 +21,5 @@ for line in filename:
 filename.close()
 
 for key in sorted(bytes_dict, key=bytes_dict.get, reverse= True):
-    if bytes_dict[key] > 7000:
+    if bytes_dict[key] > 10000000:
         print(f'{key}:  {bytes_dict[key]}')
-
